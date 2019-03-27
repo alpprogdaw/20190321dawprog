@@ -1,11 +1,9 @@
 package examen.ejercicio4;
 
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
-
 
 public class Ejercicio4 {
 
@@ -16,15 +14,16 @@ public class Ejercicio4 {
 		String operacion;
 		String nombre;
 		Integer n;
+		
 		int cont = 0;
 		do {
 			do {
 				System.out.println("¿Que operacion quieres realizar? (buscar o agregar)");
-				operacion = in.next();
-				if (operacion.toLowerCase() != "buscar" && operacion.toLowerCase() != "agregar") {
+				operacion = in.next().toLowerCase();
+				if (operacion.equalsIgnoreCase("buscar") && operacion.equalsIgnoreCase("agregar")) {
 					throw new Exception("La operacion a realizar no es posible");
 				}
-			} while (operacion.toLowerCase() != "buscar" && operacion.toLowerCase() != "agregar");
+			} while (operacion.equalsIgnoreCase("buscar") && operacion.equalsIgnoreCase("agregar"));
 			if (operacion.toLowerCase().equals("agregar")) {
 				if (cont == 0) {
 					System.out.println("Introduzca un nuevo contacto: ");
@@ -33,43 +32,45 @@ public class Ejercicio4 {
 					n = in.nextInt();
 					mapa.put(nombre, n);
 					cont++;
+					mostrarMapa(mapa);
 				}
 				else {
 					System.out.println("Introduzca un nuevo contacto: ");
 					nombre = in.next();
 					System.out.println("Introduzca su numero: ");
 					n = in.nextInt();
-					for (Map.Entry<String, Integer> entry : mapa.entrySet()) {
-						if (entry.getKey() != nombre && entry.getValue() != n) {
-							mapa.put(nombre, n);
-						}
-						else {
-							mapa.put(entry.getKey(), n);
-						}
+					if (mapa.containsKey(nombre)) {
+						mapa.remove(n);
+						mapa.put(nombre, n);
+					}
+					else {
+						mapa.put(nombre, n);
 					}
 					cont++;
+					mostrarMapa(mapa);
 				}
-				
 			}
 			else {
 				System.out.println("Introduza el nombre de la persona a buscar: ");
 				nombre = in.next();
 				if (mapa.containsKey(nombre)) {
-					for (Map.Entry<String, Integer> entry : mapa.entrySet()) {
-						System.out.println(nombre + entry.getValue());
-					}
+					mostrarMapa(mapa);
 				}
 				else {
 					System.out.println("El contacto " + nombre + " no se encuentra en la agenda.");
 				}
 			}
-			System.out.println("¿Quiere realizar otra operacion?");
+			System.out.println("¿Quiere realizar otra operacion? (escriba fin para terminar)");
 			respuesta = in.next();
 		}while (!respuesta.toLowerCase().equals("fin"));
+		mostrarMapa(mapa);
 
-		for (Entry<String, Integer> entry : mapa.entrySet()) {
-		    System.out.println("Nombre: " + entry.getKey() + "- telefono: " + entry.getValue());
-		}
 	}
 
+	public static void mostrarMapa(Map<String, Integer> mapa){
+		for (Entry<String, Integer> entry : mapa.entrySet()) {
+			System.out.println("Nombre: " + entry.getKey() + " - telefono: " + entry.getValue());
+		}
+	}
 }
+
