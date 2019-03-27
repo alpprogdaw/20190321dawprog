@@ -15,7 +15,7 @@ public class Ejercicio4 {
 		String nombre;
 		Integer n;
 		
-		int cont = 0;
+		int cont =0;
 		do {
 			do {
 				System.out.println("¿Que operacion quieres realizar? (buscar o agregar)");
