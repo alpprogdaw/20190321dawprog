@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Ejercicio4 {
 
@@ -14,12 +16,17 @@ public class Ejercicio4 {
 		String operacion;
 		String nombre;
 		Integer n;
+		Pattern p; 
+	    Matcher m; 
+	
 		
 		int cont = 0;
 		do {
 			do {
 				System.out.println("¿Que operacion quieres realizar? (buscar o agregar)");
 				operacion = in.next().toLowerCase();
+				p = Pattern.compile("buscar");
+				p.matcher(operacion);
 				if (operacion.equalsIgnoreCase("buscar") && operacion.equalsIgnoreCase("agregar")) {
 					throw new Exception("La operacion a realizar no es posible");
 				}
